@@ -1,0 +1,9 @@
+ENV:
+
+    python 2.7
+
+    redis 2.8.19
+
+Third Part Package:
+
+    pyquery
