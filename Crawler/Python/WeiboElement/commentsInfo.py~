@@ -9,7 +9,7 @@ import weiboInfo.py
 reload(sys)
 sys.setdefaultencoding( "utf-8" )
 
-class weiboInfo(object)
+class weiboInfo(object):
     def __init__(self,weiboid,userid,content,time,likeNum):
         self.weiboid=weiboid
         self.userid=userid

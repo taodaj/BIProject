@@ -19,7 +19,19 @@ class weiboInfo(object):
 	self.commentNum=commentNum
 	self.likeNum=likeNum
 	self.plantform=plantform
+    def getWeiboid():
+	return self.weiboid
+    def getUserid():
+	return self.userid
+    def getContent():
+	return self.content
+    def getTime():
+	return self.time
+    def getLikeNum():
+	return self.likeNum
     def setAT(object):
 	self.atJson=atJson
+    def getAT():
+	return self.atJson
     
 

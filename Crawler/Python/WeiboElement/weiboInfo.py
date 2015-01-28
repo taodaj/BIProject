@@ -18,8 +18,28 @@ class weiboInfo(object):
 	self.commentNum=commentNum
 	self.likeNum=likeNum
 	self.plantform=plantform
+    def getWeiboid():
+	return self.weiboid
+    def getUserid():
+	return self.userid
+    def getContent():
+	return self.content
+    def getTime():
+	return self.time
+    def getFowardingNum():
+	return self.fowardingNum
+    def getCommentNum():
+	return self.commentNum
+    def getLikeNum():
+	return self.likeNum
+    def getPlantform():
+	return self.plantform
     def setAT(object):
 	self.atJson=atJson
-    def setWeiboInfo(object):
+    def getAT():
+	return self.atJson
+    def setfowardingWeiboId(object):
         self.fowardingWeiboId=object
+    def getfowardingWeiboId():
+	return self.fowardingWeiboId
     
