@@ -45,15 +45,21 @@ class storage:
             self.redis_db.delete('wid')
             self.redis_db.delete('cid')
 
+    #prefix is the prefix of a filename, storedList is the data to be stored
     def store2File(self,prefix,storedList):
-        if os.path.exists('data')==False:
-            os.mkdir('data')
-        f=open(os.getcwd()+os.sep+'data'+os.sep+prefix+time.strftime('%Y_%m_%d_%H_%M_%S'),'w')
+        if os.path.exists('textData')==False:
+            os.mkdir('textdata')
+        f=open(os.getcwd()+os.sep+'textdata'+os.sep+prefix+time.strftime('%Y_%m_%d_%H_%M_%S'),'w')
         for ele in storedList:
             f.write(ele+'\n')
         f.close()
 
-    def store2Object(self):
+    def store2Object(self,prefix,entityList):
+        if os.path.exists('entityData')==False:
+            os.mkdir('entitydata')
+        of=open(os.getcwd()+os.sep+'entityData'+os.sep+prefix+time.strftime('%Y_%m_%d_%H_%M_%S'),'wb')
+        pickle.dump(entityList,of)
+        of.close()
         pass
 
     def store2DB(self):
