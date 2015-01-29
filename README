@@ -7,3 +7,13 @@ ENV:
 Third Part Package:
 
     pyquery
+
+dispatcher.py   : manage the work of spiders
+
+storage.py      : deal with things with DB and storing data
+
+spider.py       : super class of more specific spiders
+
+adapter.py      : transform data among many kinds of form
+
+
