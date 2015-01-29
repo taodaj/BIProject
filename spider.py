@@ -17,7 +17,9 @@ logging.basicConfig(level=logging.DEBUG,
                     ) 
 
 
-
+class BlockedException(Exception):
+    def __init__(self):
+        Exception.__init__(self)
 
 class spider:
     def __init__(self,username,password):
@@ -64,6 +66,24 @@ class spider:
         logging.info("user :"+self.username+" login sucesses")
         return opener
 
+    def downloadHTML(self,url,expectedURLSeg):
+        #HTTPError may be raised       
+        req=self.opener.open(url,timeout=5)
+        # if blocked by sina, raise exception
+        self.blockedCheck(expectedURLSeg,req.geturl())
+        content=req.read()
+        return content
+            
+    def blockedCheck(self,expectedURL,actualURL):
+        if expectedURL not in actualURL:
+            logging.info('user : '+self.username+' is blocked by Sina')
+            raise BlockedException()
+
+    def randomRest(self):
+        restTime=random.random()*2+5
+        time.sleep(restTime)
+        return restTime
+
+
 if __name__ == '__main__':
-    #!!!!USE YOUR USERNAME AND PASSWORD HERE
-    spider = spider('USERNAME', 'PASSWORD')
+    spider = spider(USERNAME, PASSWORD)

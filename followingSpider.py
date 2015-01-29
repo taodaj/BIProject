@@ -9,8 +9,9 @@ import logging
 import time
 import random
 import sys
+import socket
 from spider import spider
-
+from spider import BlockedException
 
 logging.basicConfig(level=logging.DEBUG,  
                     format='%(asctime)s %(filename)s[line:%(lineno)d] %(levelname)s %(message)s',  
@@ -20,9 +21,6 @@ logging.basicConfig(level=logging.DEBUG,
 
 
 
-class BlockedException(Exception):
-    def __init__(self):
-        Exception.__init__(self)
 
 class followingSpider(spider):
     def __init__(self,username,password):
@@ -32,49 +30,32 @@ class followingSpider(spider):
     def getfollowing(self,userid):
         #list to store the people he follows
         followingList=[]
-        
-        #HTTPError may be raised
-        req=self.opener.open('http://weibo.cn/'+userid+'/follow',timeout=5)
-        # if blocked by sina, raise exception
-        self.blockedCheck('weibo.cn/'+userid+'/follow',req.geturl())
-        content=req.read()
-        followingList.extend(self.extractFollowing(userid,content))    
-
-        #rest for a while
-        restTime=self.randomRest()
-        #logging
-        logging.info('rested for '+str(restTime)+' collect from '+req.geturl())
-        #extract next url
+        content=''
+        preURL='http://weibo.cn'
+        postURL='/'+userid+'/follow'
+        expectedURLSeg='weibo.cn/'+userid+'/follow'
         while True:
-            nextUrl=self.extractFollowingUrl(content)
-            if nextUrl == None:
-                break
-            req=self.opener.open('http://weibo.cn'+nextUrl,timeout=5)
-            self.blockedCheck('weibo.cn/'+userid+'/follow',req.geturl())
             try:
-                content=req.read()
+                #HTTPError AND TIMEOUT , BlockedException may arise
+                content=self.downloadHTML(preURL+postURL,expectedURLSeg)
                 #extract data
                 followingList.extend(self.extractFollowing(userid,content))
                 #rest for a while
                 restTime=self.randomRest()
                 #logging
-                logging.info('rested for '+str(restTime)+' collect from '+req.geturl())
+                logging.info('rested for '+str(int(restTime))+'s before collecting data from '+postURL)
+                postURL=self.extractFollowingUrl(content)
+                if postURL == None:
+                    break
             except socket.timeout as e:
                 #logging
-                logging.info('TIME OUT, try again from '+req.geturl())
-                continue 
+                logging.warning('TIME OUT, try again from '+postURL)
+                continue
+
 
         return followingList
 
-    def blockedCheck(self,expectedURL,actualURL):
-        if expectedURL not in actualURL:
-            logging.info('user : '+self.username+' is blocked by Sina')
-            raise BlockedException()
     
-    def randomRest(self):
-        restTime=random.random()*2+5
-        time.sleep(restTime)
-        return restTime     
     
     def extractFollowingUrl(self,content):
         html=pyquery.PyQuery(content)
@@ -94,11 +75,11 @@ class followingSpider(spider):
                 fans=pyquery.PyQuery(ele)('td').text().split(' ')[1][2:-1]
                 pageList.append(userid+','+uid+','+name+','+fans)
             except AttributeError as e:
-                print e 
+                logging.warning(str(e))
                 continue
         return pageList
 
 if __name__ == '__main__':
     #!!!!USE YOUR USERNAME AND PASSWORD HERE
-    spider = weiboSpider('USERNAME', 'PASSWORD')
+    spider = weiboSpider(USERNAME, PASSWORD)
     print spider.getfollowing('3399558022')

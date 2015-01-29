@@ -7,6 +7,7 @@ import urllib2
 import sys
 import logging
 import pickle
+from spider import BlockedException
 from storage import storage
 
 reload(sys)
@@ -31,8 +32,7 @@ class dispatcher:
         self.storage=storage()
 
     def collectFollowing(self):
-        #every spider is equiped with an account
-        ##!!!!USE YOUR USERNAME AND PASSWORD HERE
+        #every spider is equiped with a account
         spider=followingSpider.followingSpider(USERNAME, PASSWORD)
         #if HTTPError occurs only redo 3 times
         redoTimes=0
@@ -64,11 +64,12 @@ class dispatcher:
             except urllib2.HTTPError as e:
                 if redoTimes>3:
                     redoTimes=0
-                    logging.info('try more than 3 times give up collecting user : '+uid)
+                    logging.warning(str(e))
+                    logging.warning('try more than 3 times give up collecting user : '+uid)
                 else:
                     redoTimes+=1
                 continue
-            except weiboSpider.BlockedException as e:
+            except BlockedException as e:
                 #if there exsits other spider use it if run out of account , put remaining  data into file
                 logging.error('Blocked by Sina')
 
@@ -85,11 +86,12 @@ class dispatcher:
                 #step 1 : push data to somewhere
                 self.storage.storeToFile(filename+str(count),self.storedList)    
                 #step 2 : pickling state
-                self.storage.hiberCandidateQueue(candidateQueue)                
+                self.storage.hiberCandidateQueue(candidateQueue)
+                logging.error(str(e))                
                 logging.error('Network Error! Candidata Queue has been hibernated ')
                 exit()
 
-            #when size of list arrives 1000 put them to file    
+            #when size of list arrives 100 put them to file    
             if len(self.storedList) > 100:
                 #put all uids into file
                 self.storage.store2File(u'following',self.storedList)
