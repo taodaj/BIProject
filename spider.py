@@ -71,7 +71,13 @@ class spider:
         req=self.opener.open(url,timeout=5)
         # if blocked by sina, raise exception
         self.blockedCheck(expectedURLSeg,req.geturl())
+        #fetch data
         content=req.read()
+        #rest for some time
+        restTime=self.randomRest()
+        #logging
+        logging.info('rested for '+str(int(restTime))+'s after collecting data from '+url)
+        
         return content
             
     def blockedCheck(self,expectedURL,actualURL):
@@ -86,4 +92,4 @@ class spider:
 
 
 if __name__ == '__main__':
-    spider = spider(USERNAME, PASSWORD)
+    spider = spider('18612986170', '18612986170')

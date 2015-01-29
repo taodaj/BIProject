@@ -40,10 +40,7 @@ class followingSpider(spider):
                 content=self.downloadHTML(preURL+postURL,expectedURLSeg)
                 #extract data
                 followingList.extend(self.extractFollowing(userid,content))
-                #rest for a while
-                restTime=self.randomRest()
-                #logging
-                logging.info('rested for '+str(int(restTime))+'s before collecting data from '+postURL)
+                #extract next url
                 postURL=self.extractFollowingUrl(content)
                 if postURL == None:
                     break
