@@ -1,13 +1,8 @@
 #!/bin/python
 # -*- coding: utf-8 -*-
 
-import cookielib
-import urllib
-import urllib2
-import pyquery
+
 import logging
-import time
-import random
 import sys
 import socket
 
@@ -89,10 +84,7 @@ class commentSpider(spider):
         # get page num
         tree=etree.HTML(self.content)
         commentList.extend(self.extractComment(tree))
-        #rest for a while
-        restTime = self.randomRest()
-        #logging
-        logging.info('rested for ' + str(restTime) + ' collect from ' + url)
+
         pageNum=0
         try:
             pageNum = tree.xpath('id("pagelist")/form/div/text()[2]')[0]
@@ -112,25 +104,7 @@ class commentSpider(spider):
                 logging.warning('TIME OUT, try again from '+url)
             tree=etree.HTML(self.content)
             commentList.extend(self.extractComment(tree))
-            #rest for a while
-            restTime = self.randomRest()
-            #logging
-            logging.info('rested for ' + str(restTime) + ' collect from ' + url)
-        #extract next url
-        pageNum=1
-        '''while True:
-            nextUrl = self.extractFollowingUrl(content)
-            if nextUrl == None:
-                break
-            req = self.opener.open('http://weibo.cn' + nextUrl, timeout=5)
-            self.blockedCheck('weibo.cn/' + userid + '/follow', req.geturl())
-            content = req.read()
-            #extract data
-            followingList.extend(self.extractFollowing(content))
-            #rest for a while
-            restTime = self.randomRest()
-            #logging
-            logging.info('rested for ' + str(restTime) + ' collect from ' + req.geturl())'''
+
 
         return commentList
 
