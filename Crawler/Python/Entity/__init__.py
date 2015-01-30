@@ -4,5 +4,4 @@
 from Comment import Comment
 from FollowingRelation import FollowingRelation
 from User import User
-from Weibo import Weibo
 

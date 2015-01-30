@@ -1,9 +1,8 @@
 class FollowingRelation:
     def __init__(self):
-        pass
+        print "new FollowingRelation"
 
-    def inflate(data):
+    def inflate(self,data):
         fields=data.split(',')
-        self.uid=fileds[0]
-        self.fuid=fileds[1]        
-
+        self.uid=fields[0]
+        self.fuid=fields[1]

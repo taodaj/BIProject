@@ -1,15 +1,16 @@
 #!/bin/python
 # -*- coding: utf-8 -*-
 
-import followingSpider
+
 import Queue
 import urllib2
 import sys
 import logging
 import pickle
-from spider import BlockedException
-from storage import storage
-
+sys.path.append('..')
+import Util.Spider.followingSpider
+from Util.Spider.spider import BlockedException
+from Util.Process.storage import storage
 reload(sys)
 sys.setdefaultencoding("utf-8")
 

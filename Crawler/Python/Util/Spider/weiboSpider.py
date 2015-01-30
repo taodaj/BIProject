@@ -11,8 +11,8 @@ import random
 import sys
 import socket
 from lxml import etree
-sys.path.append('..')
-import Util.spider as Spider
+import spider as Spider
+import datetime
 reload(sys)
 sys.setdefaultencoding('utf-8')
 
@@ -90,13 +90,24 @@ class weiboSpider(Spider.spider):
                 commentNum=ele.xpath(u"div[last()]/a[last()-1]")[0].text
                 fowardingNum=ele.xpath(u"div[last()]/a[last()-2]")[0].text
                 info=ele.xpath(u"div[last()]/span[@class='ct']")[0].text.split(u'来自')
-                time=info[0]
+                timearray=info[0].split(' ')
+                if(len(timearray)==2):
+                    if(timearray[0]=="今天"):
+                        timearray[0] = time.strftime('%m月%d日',time.localtime(time.time()))
+                    time_sent = timearray[0]+' '+timearray[1]
+                elif(len(timearray)==1):
+                    minute_ago = int(timearray[0].split('分钟前')[0])
+                    minute_now = int(time.strftime('%M',time.localtime(time.time())))
+                    date_minute_now = datetime.datetime.fromtimestamp(minute_now)
+                    date_time_sent = date_minute_now - datetime.timedelta(minutes=minute_ago)
+                    print date_time_sent
+                    time_sent = datetime.datetime.strftime(date_time_sent,'%m月%d日 %H时%M分')
                 plantform=info[1]
                 if type(content) == type(None):
                     logging.warning('Did not get '+weiboid+'content ')
                     content= " "
-                print content.encode("GBK", "ignore")
-                pageList.append(weiboid+','+userid+','+content+','+time+','+fowardingNum+','+commentNum +','+likeNum+','+plantform+','+fowardingWeiboId+','+atsList)
+                print time_sent
+                pageList.append(weiboid+','+userid+','+content+','+time_sent+','+fowardingNum+','+commentNum +','+likeNum+','+plantform+','+fowardingWeiboId+','+atsList)
             except AttributeError as e:
                 logging.warning(str(e))
                 continue

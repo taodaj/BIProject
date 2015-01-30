@@ -10,8 +10,7 @@ import time
 import random
 import sys
 import socket
-sys.path.append('..')
-import Util.spider as Spider
+import spider as Spider
 reload(sys)
 sys.setdefaultencoding('utf-8')
 

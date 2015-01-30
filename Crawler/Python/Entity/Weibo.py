@@ -3,9 +3,9 @@
 
 class Weibo:
     def __init__(self):
-        pass
+        print "new Weibo"
 
-    def inflate(data):
+    def inflate(self,data):
         fields=data.split(',')
         self.weiboid=fields[0]
         self.userid=fields[1]
@@ -16,4 +16,5 @@ class Weibo:
         self.likeNum=fields[6]
         self.plantform=fields[7]
         self.fowardingWeiboId=fields[8]
-        self.atJson=fields[9]  
+        self.atJson=fields[9]
+

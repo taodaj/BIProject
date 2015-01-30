@@ -12,10 +12,9 @@ import random
 import sys
 import socket
 from lxml import etree
-sys.path.append('..')
-import Util.spider as Spider
+import spider as Spider
 import re
-import time,datetime
+import datetime
 import HTMLParser
 
 reload(sys)

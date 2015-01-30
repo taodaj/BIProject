@@ -10,8 +10,7 @@ import time
 import random
 import socket
 import sys
-sys.path.append('..')
-import Util.spider as Spider
+import spider as Spider
 from lxml import etree
 import re
 
