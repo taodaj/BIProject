@@ -1,4 +1,5 @@
 #!/bin/python
+#fileName:Weibo.py
 # -*- coding: utf-8 -*-
 
 class Weibo:

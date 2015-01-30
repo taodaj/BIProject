@@ -16,15 +16,12 @@ import spider as Spider
 import re
 import datetime
 import HTMLParser
-
-reload(sys)
-sys.setdefaultencoding('utf-8')
-
 try:
     import xml.etree.cElementTree as ET
 except ImportError:
     import xml.etree.ElementTree as ET
-
+reload(sys)
+sys.setdefaultencoding('utf-8')
 
 logging.basicConfig(level=logging.DEBUG,
                     format='%(asctime)s %(filename)s[line:%(lineno)d] %(levelname)s %(message)s',

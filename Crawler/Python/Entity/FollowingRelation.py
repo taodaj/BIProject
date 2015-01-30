@@ -1,3 +1,6 @@
+#!/bin/python
+#fileName:FollowingRelation.py
+# -*- coding: utf-8 -*-
 class FollowingRelation:
     def __init__(self):
         print "new FollowingRelation"

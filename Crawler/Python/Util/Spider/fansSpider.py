@@ -1,4 +1,5 @@
 #!/bin/python
+#fileName:fansSpider.py
 # -*- coding: utf-8 -*-
 
 import cookielib

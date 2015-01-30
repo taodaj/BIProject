@@ -1,4 +1,5 @@
 #!/bin/python
+#fileName:adapter.py
 # -*- coding: utf-8 -*-
 
 import sys

@@ -1,4 +1,5 @@
 #!/bin/python
+#fileName:followingSpider.py
 # -*- coding: utf-8 -*-
 
 import cookielib
