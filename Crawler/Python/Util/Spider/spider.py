@@ -1,6 +1,6 @@
-#!/bin/python
+#-*- coding: UTF-8 -*-
+# #!/bin/python
 #fileName:spider.py
-# -*- coding: utf-8 -*-
 
 import cookielib
 import urllib

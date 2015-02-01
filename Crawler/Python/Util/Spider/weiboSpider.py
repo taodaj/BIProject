@@ -1,6 +1,6 @@
-# FileName : weiboSpider.py
+#-*- coding: UTF-8 -*-
+#!/usr/bin/python
 #fileName:weiboSpider.py
-# -*- coding: utf-8 -*-
 
 import cookielib
 import urllib
@@ -65,32 +65,41 @@ class weiboSpider(Spider.spider):
         i=0
         for ele in tree.xpath(u"//div[@class='c' and @id]"):
             try:
+                xpath_href = u"div/span[@class='cmt']/a"
+                xpath_href_contentList=u"div[last()]/text()"
+                xpath_contentList=u"div/span[@class='ctt']/text()"
+                xpath_href_ats=u"div[last()]/a"
+                xpath_ats=u"div/span[@class='ctt']/a"
+                xpath_like=u"div[last()]/a[last()-3]"
+                xpath_comment=u"div[last()]/a[last()-1]"
+                xpath_fowarding=u"div[last()]/a[last()-2]"
+                xpath_info=u"div[last()]/span[@class='ct']"
                 weiboid=ele.get("id").split('_')[1]
                 print weiboid
-                hrefs = ele.xpath(u"div/span[@class='cmt']/a")
+                hrefs = ele.xpath(xpath_href)
                 fowardingWeiboId=""
                 atsList=""
                 content=""
                 if hrefs:
                     fowardingWeiboId=hrefs[0].text
-                    contentList=ele.xpath(u"div[last()]/text()")
+                    contentList=ele.xpath(xpath_contentList)
                     for contents in contentList:
                         content+=contents
-                    ats=ele.xpath(u"div[last()]/a")[0]
+                    ats=ele.xpath(xpath_href_ats)
                 else :
-                    contentList=ele.xpath(u"div/span[@class='ctt']/text()")
+                    contentList=ele.xpath(xpath_contentList)
                     for contents in contentList:
                         content+=contents
-                    ats=ele.xpath(u"div/span[@class='ctt']/a")
+                    ats=ele.xpath(xpath_ats)
                 for at in ats:
                     strat=at.get('href')
                     if strat.find('/n/')!=-1:
                         atsList+=at.text[1:]+"//"
                 #print content
-                likeNum=ele.xpath(u"div[last()]/a[last()-3]")[0].text
-                commentNum=ele.xpath(u"div[last()]/a[last()-1]")[0].text
-                fowardingNum=ele.xpath(u"div[last()]/a[last()-2]")[0].text
-                info=ele.xpath(u"div[last()]/span[@class='ct']")[0].text.split(u'来自')
+                likeNum=ele.xpath(xpath_like)[0].text
+                commentNum=ele.xpath(xpath_comment)[0].text
+                fowardingNum=ele.xpath(xpath_fowarding)[0].text
+                info=ele.xpath(xpath_info)[0].text.split(u'来自')
                 timearray=info[0].split(' ')
                 if(len(timearray)==2):
                     if(timearray[0]=="今天"):
