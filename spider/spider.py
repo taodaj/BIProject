@@ -9,6 +9,7 @@ import logging
 import time
 import random
 import sys
+import socket
 
 logging.basicConfig(level=logging.DEBUG,  
                     format='%(asctime)s %(filename)s[line:%(lineno)d] %(levelname)s %(message)s',  
@@ -18,8 +19,8 @@ logging.basicConfig(level=logging.DEBUG,
 
 
 class BlockedException(Exception):
-    def __init__(self):
-        Exception.__init__(self)
+    def __init__(self,*args):
+        Exception.__init__(self,*args)
 
 class spider:
     def __init__(self,username,password):
@@ -67,18 +68,24 @@ class spider:
         return opener
 
     def downloadHTML(self,url,expectedURLSeg):
-        #HTTPError may be raised       
-        req=self.opener.open(url,timeout=5)
-        # if blocked by sina, raise exception
-        self.blockedCheck(expectedURLSeg,req.geturl())
-        #fetch data
-        content=req.read()
-        #rest for some time
-        restTime=self.randomRest()
-        #logging
-        logging.info('rested for '+str(int(restTime))+'s after collecting data from '+url)
-        
-        return content
+        while True:
+            try:
+                #HTTPError may be raised       
+                req=self.opener.open(url,timeout=5)
+                # if blocked by sina, raise exception
+                self.blockedCheck(expectedURLSeg,req.geturl())
+                #fetch data
+                content=req.read()
+                #rest for some time
+                restTime=self.randomRest()
+                #logging
+                logging.info('rested for '+str(int(restTime))+'s after collecting data from '+url) 
+                return content
+            except socket.timeout as e:
+                #if time out, rest for sometime and then try to open url again
+                restTime=self.randomRest()
+                logging.warning('TIME OUT, try again from '+url)
+                continue
             
     def blockedCheck(self,expectedURL,actualURL):
         if expectedURL not in actualURL:
@@ -86,10 +93,10 @@ class spider:
             raise BlockedException()
 
     def randomRest(self):
-        restTime=random.random()*2+5
+        restTime=random.random()*5+5
         time.sleep(restTime)
         return restTime
 
 
 if __name__ == '__main__':
-    spider = spider('18612986170', '18612986170')
+    spider = spider(USERNAME, PASSWORD)
