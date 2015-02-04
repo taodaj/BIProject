@@ -56,7 +56,7 @@ class storage:
 
     def store2Object(self,prefix,entityList):
         if os.path.exists('entityData')==False:
-            os.mkdir('entitydata')
+            os.mkdir('entityData')
         of=open(os.getcwd()+os.sep+'entityData'+os.sep+prefix+time.strftime('%Y_%m_%d_%H_%M_%S'),'wb')
         pickle.dump(entityList,of)
         of.close()
