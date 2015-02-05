@@ -27,7 +27,8 @@ class dispatcher:
     '''
  
     def __init__(self):
-        self.STORESIZE=10
+        #MODIFY HERE!!!!!
+        self.STORESIZE=100
         #candidate queue which spider fetches uid from
         self.candidateQueue=Queue.Queue()
         self.accounts=Queue.Queue()
@@ -40,15 +41,21 @@ class dispatcher:
 
 
 
-    def dispatch(self):
+    def dispatch(self,type):
         self.initAccount()
         #self.initCandidate('Weibo')
         #self.initCandidate('Profile')
-        self.initCandidate('Comment')
+        #self.initCandidate('Comment')
+        self.initCandidate(type)
         ac=self.accounts.get()
-        #self.collectWeibo(ac['username'],ac['password'])
-        #self.collectProfile(ac['username'],ac['password'])
-        self.collectComment(ac['username'],ac['password'])
+        if type=='FollowRelation':
+            self.collectWeibo(ac['username'],ac['password'])
+        elif type=='Profile':
+            self.collectProfile(ac['username'],ac['password'])
+        elif type=='Weibo':
+            self.collectWeibo(ac['username'],ac['password'])
+        elif type=='Comment':
+            self.collectComment(ac['username'],ac['password'])
 
 
     def initCandidate(self,type,sourceDir=None):
@@ -467,4 +474,4 @@ class dispatcher:
 if __name__ == '__main__':
     
     d=dispatcher()
-    d.dispatch()
+    d.dispatch('Comment')

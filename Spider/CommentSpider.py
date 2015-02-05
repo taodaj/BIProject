@@ -81,18 +81,19 @@ class CommentSpider(Spider):
                 xpath_time='//div[@id="'+cid+'"]'+'/span[@class="ct"]/text()'
                 xpath_agree='//div[@id="'+cid+'"]'+'/span[@class="cc"][1]/a/text()'
                 #comment 评论内容
-                comment = tree.xpath('string('+xpath_comment+')')
+                comment = str(tree.xpath('string('+xpath_comment+')'))
                 #agree 赞同数
-                agree=tree.xpath(xpath_agree)[0][2]
+                agree=str(tree.xpath(xpath_agree)[0][2])
                 timearray=tree.xpath(xpath_time)[0].encode('utf-8').split('来自')[0].split(' ')
 
-                time_sent = self.timeFormat(timearray)
+                time_sent = str(self.timeFormat(timearray))
 
-                print agree,time_sent,comment
-                commentContent = {'uid':self.userid,'wid':self.weiboid,'comment':comment,'agree':agree,'time':time_sent,'cid':cid}
+                #print type(self.userid),type(self.weiboid),type(comment),type(agree),type(time_sent),type(cid)
+                commentContent = {'uid':self.userid,'wid':self.weiboid,'comment':comment,'agree':agree,'time':time_sent,'cid':str(cid)}
                 commentList.append(commentContent)
 
         return commentList
+
     #统一时间格式
     def timeFormat(self,timearray):
         # 今天
@@ -103,12 +104,11 @@ class CommentSpider(Spider):
         # xx分钟前
         elif(len(timearray)==1):
             minute_ago = int(timearray[0].split('分钟前')[0])
-            minute_now = int(time.strftime('%M',time.localtime(time.time())))
-            date_minute_now = datetime.datetime.fromtimestamp(minute_now)
-            date_time_sent = date_minute_now - datetime.timedelta(minutes=minute_ago)
-            print date_time_sent
+            date_now = datetime.datetime.fromtimestamp(time.time())
+            date_time_sent = date_now - datetime.timedelta(minutes=minute_ago)
             time_sent = datetime.datetime.strftime(date_time_sent,'%m月%d日 %H时%M分')
         return unicode(time_sent,'utf8')
+
 
 if __name__ == '__main__':
     #!!!!USE YOUR USERNAME AND PASSWORD HERE
