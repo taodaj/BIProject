@@ -90,7 +90,7 @@ class commentSpider(spider):
                 time_sent = self.timeFormat(timearray)
 
                 print agree,time_sent,comment
-                commentContent = {'userid':self.userid,'weiboid':self.weiboid,'comment':comment,'agree':agree,'time':time_sent}
+                commentContent = {'uid':self.userid,'wid':self.weiboid,'comment':comment,'agree':agree,'time':time_sent,'cid':id}
                 commentList.append(commentContent)
 
         return commentList
