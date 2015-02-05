@@ -8,5 +8,10 @@ class Comment(Entity):
         Entity.__init__(self)
         #init your attr
         #eg self.uid='null'
+        self.userid='null'
+        self.weiboid='null'
+        self.comment='null'
+        self.agree='null'
+        self.time='null'
         
 
