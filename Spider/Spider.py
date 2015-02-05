@@ -22,7 +22,7 @@ class BlockedException(Exception):
     def __init__(self,*args):
         Exception.__init__(self,*args)
 
-class spider:
+class Spider:
     def __init__(self,username,password):
         self.username=username
         self.password=password

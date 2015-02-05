@@ -11,8 +11,9 @@ import random
 import sys
 import socket
 from lxml import etree
-import spider as Spider
+from Spider import *
 import datetime
+
 reload(sys)
 sys.setdefaultencoding('utf-8')
 
@@ -21,9 +22,10 @@ logging.basicConfig(level=logging.DEBUG,
                     datefmt='%a, %d %b %Y %H:%M:%S',
                     stream=sys.stdout
                     )
-class weiboSpider(Spider.spider):
+
+class WeiboSpider(Spider):
     def __init__(self,username,password):
-        Spider.spider.__init__(self,username,password)
+        Spider.__init__(self,username,password)
 
     #get the users' weibo
     def getWeibo(self,userid):
@@ -41,7 +43,7 @@ class weiboSpider(Spider.spider):
            #extract next url
            postURL=self.extractFollowingUrl(content)
            if postURL == None:
-              print 'Cant get postURL'
+              #print 'Cant get postURL'
               break
         return weiboList
 
@@ -61,7 +63,7 @@ class weiboSpider(Spider.spider):
             try:
                 obj={}
                 weiboid=ele.get("id").split('_')[1]
-                print weiboid
+                #print weiboid
                 hrefs = ele.xpath(u"div/span[@class='cmt']/a")
                 fowardingWeiboId=""
                 atsList=""
@@ -96,7 +98,7 @@ class weiboSpider(Spider.spider):
                     minute_now = int(time.strftime('%M',time.localtime(time.time())))
                     date_minute_now = datetime.datetime.fromtimestamp(minute_now)
                     date_time_sent = date_minute_now - datetime.timedelta(minutes=minute_ago)
-                    print date_time_sent
+                    #print date_time_sent
                     time_sent = datetime.datetime.strftime(date_time_sent,'%m月%d日 %H时%M分')
                 plantform=info[1]
                 if type(content) == type(None):
@@ -122,7 +124,7 @@ class weiboSpider(Spider.spider):
 
 if __name__ == '__main__':
     #!!!!USE YOUR USERNAME AND PASSWORD HERE
-    Spider.spider = weiboSpider("18811442500", "742612")
+    spider = WeiboSpider("18811442500", "742612")
     count=1
     file = open("test-uids")
     while 1:
@@ -134,4 +136,4 @@ if __name__ == '__main__':
         uid=line[0:10]
         print uid
         count=count+1
-        Spider.spider.getWeibo(uid)
+        spider.getWeibo(uid)

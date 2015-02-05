@@ -22,4 +22,5 @@ class Entity:
                     exec('self.'+attr_key+'=temp')
                     break
             if signal==True:
-                raise NotAttributeException('Entity has no attribute '+attr_key)
+                pass
+                #raise NotAttributeException('Entity has no attribute '+attr_key)

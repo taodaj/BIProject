@@ -10,8 +10,7 @@ import time
 import random
 import sys
 import socket
-from spider import spider
-from spider import BlockedException
+from Spider import *
 
 logging.basicConfig(level=logging.DEBUG,  
                     format='%(asctime)s %(filename)s[line:%(lineno)d] %(levelname)s %(message)s',  
@@ -22,7 +21,7 @@ logging.basicConfig(level=logging.DEBUG,
 
 
 
-class followSpider(spider):
+class FollowSpider(Spider):
     def __init__(self,username,password):
         spider.__init__(self,username,password)        
 

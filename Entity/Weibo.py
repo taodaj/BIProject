@@ -13,7 +13,7 @@ class Weibo(Entity):
         self.plantform='null'
         self.fowardingWeiboId='null'
         self.atsList='null'
-        print "new Weibo"
+        #print "new Weibo"
 
     #def inflate(self,data):
     #    fields=data.split(',')

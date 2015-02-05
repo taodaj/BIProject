@@ -4,6 +4,8 @@
 from Entity import *
 
 class FollowRelation(Entity):
+
+
     def __init__(self):
         Entity.__init__(self)
         self.uid='null'

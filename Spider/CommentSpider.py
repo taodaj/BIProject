@@ -17,8 +17,7 @@ try:
 except ImportError:
     import xml.etree.ElementTree as ET
 
-from spider import spider
-from spider import BlockedException
+from Spider import *
 
 
 
@@ -31,10 +30,10 @@ logging.basicConfig(level=logging.DEBUG,
 
 
 
-class commentSpider(spider):
+class CommentSpider(Spider):
 
     def __init__(self,username,password):
-        spider.__init__(self,username,password)
+        Spider.__init__(self,username,password)
 
     # get weibo comment
     def getComment(self, userid,weiboid):
@@ -74,13 +73,13 @@ class commentSpider(spider):
         commentList = []
         idList = tree.xpath('//div/@id')
 
-        for id in idList:
-            if(re.match('C_',id)):
-                xpath_comment='//div[@id="'+id+'"]'+'/span[@class="ctt"]'
-                xpath_comment_text='//div[@id="'+id+'"]'+'/span[@class="ctt"]/text()'
-                xpath_comment_at = '//div[@id="'+id+'"]'+'/span[@class="ctt"]/a/text()'
-                xpath_time='//div[@id="'+id+'"]'+'/span[@class="ct"]/text()'
-                xpath_agree='//div[@id="'+id+'"]'+'/span[@class="cc"][1]/a/text()'
+        for cid in idList:
+            if(re.match('C_',cid)):
+                xpath_comment='//div[@id="'+cid+'"]'+'/span[@class="ctt"]'
+                xpath_comment_text='//div[@id="'+cid+'"]'+'/span[@class="ctt"]/text()'
+                xpath_comment_at = '//div[@id="'+cid+'"]'+'/span[@class="ctt"]/a/text()'
+                xpath_time='//div[@id="'+cid+'"]'+'/span[@class="ct"]/text()'
+                xpath_agree='//div[@id="'+cid+'"]'+'/span[@class="cc"][1]/a/text()'
                 #comment 评论内容
                 comment = tree.xpath('string('+xpath_comment+')')
                 #agree 赞同数
@@ -90,7 +89,7 @@ class commentSpider(spider):
                 time_sent = self.timeFormat(timearray)
 
                 print agree,time_sent,comment
-                commentContent = {'userid':self.userid,'weiboid':self.weiboid,'comment':comment,'agree':agree,'time':time_sent}
+                commentContent = {'uid':self.userid,'wid':self.weiboid,'comment':comment,'agree':agree,'time':time_sent,'cid':cid}
                 commentList.append(commentContent)
 
         return commentList
