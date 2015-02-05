@@ -116,7 +116,7 @@ class weiboSpider(Spider.spider):
                 if type(content) == type(None):
                     logging.warning('Did not get '+weiboid+'content ')
                     content= " "
-                print time_sent
+                print atsList
                 pageList.append(weiboid+','+userid+','+content+','+time_sent+','+fowardingNum+','+commentNum +','+likeNum+','+plantform+','+fowardingWeiboId+','+atsList)
             except AttributeError as e:
                 logging.warning(str(e))
