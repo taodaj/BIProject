@@ -83,11 +83,15 @@ class commentSpider(spider):
                 xpath_agree='//div[@id="'+id+'"]'+'/span[@class="cc"][1]/a/text()'
                 #comment 评论内容
                 comment = tree.xpath('string('+xpath_comment+')')
+                comment = str(comment)
                 #agree 赞同数
                 agree=tree.xpath(xpath_agree)[0][2]
+                agree=str(agree)
+                
                 timearray=tree.xpath(xpath_time)[0].encode('utf-8').split('来自')[0].split(' ')
 
                 time_sent = self.timeFormat(timearray)
+                time_sent = str(time_sent)
 
                 print agree,time_sent,comment
                 commentContent = {'userid':self.userid,'weiboid':self.weiboid,'comment':comment,'agree':agree,'time':time_sent}
