@@ -43,8 +43,8 @@ class commentSpider(spider):
         self.weiboid=weiboid
         commentList = []
 
-        preURL = 'http://weibo.cn/'
-        postURL = 'comment/'+weiboid + '?uid=' + userid + '&rl=2&page=1'
+        preURL = 'http://weibo.cn'
+        postURL = '/comment/'+weiboid + '?uid=' + userid + '&rl=2&page=1'
         expectedURLSeg='comment/'+weiboid + '?uid=' + userid
 
         while True:
@@ -111,7 +111,7 @@ class commentSpider(spider):
             minute_ago = int(timearray[0].split('分钟前')[0])
             date_now = datetime.datetime.fromtimestamp(time.time())
             date_time_sent = date_now - datetime.timedelta(minutes=minute_ago)
-            time_sent = datetime.datetime.strftime(date_time_sent,'%m月%d日 %H时%M分')
+            time_sent = datetime.datetime.strftime(date_time_sent,'%m月%d日 %H:%M')
         return unicode(time_sent,'utf8')
 
 if __name__ == '__main__':
