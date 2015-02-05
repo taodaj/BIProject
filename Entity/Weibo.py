@@ -1,6 +1,12 @@
 #!/bin/python
 # -*- coding: utf-8 -*-
 
-class Weibo:
+from Entity import *
+
+class Weibo(Entity):
     def __init__(self):
-        pass
+        Entity.__init__(self)
+        #init your attr
+        #eg self.uid='null'
+        
+

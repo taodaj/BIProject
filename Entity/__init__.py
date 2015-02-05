@@ -2,7 +2,7 @@
 # -*- coding: utf-8 -*-
 
 from Comment import Comment
-from FollowingRelation import FollowingRelation
+from FollowRelation import FollowRelation
 from User import User
 from Weibo import Weibo
 
