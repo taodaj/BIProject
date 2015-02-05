@@ -96,17 +96,34 @@ class CommentSpider(Spider):
 
     #统一时间格式
     def timeFormat(self,timearray):
-        # 今天
+
         if(len(timearray)==2):
+            #eg 今天 21:59
             if(timearray[0]=="今天"):
-                timearray[0] = time.strftime('%m月%d日',time.localtime(time.time()))
-            time_sent = timearray[0]+' '+timearray[1]
-        # xx分钟前
+                date_weibo = time.strftime('%Y-%m-%d',time.localtime(time.time()))
+                time_weibo = timearray[1]
+            #eg 2014-12-31 13:38:16
+            elif(timearray[0].find('-') >= 0):
+                time_hour = timearray[1].split(':')[0]
+                time_min = timearray[1].split(':')[1]
+                date_weibo = timearray[0]
+                time_weibo = time_hour+':'+time_min
+
+            #eg  01月02日 01:37
+            elif(timearray[0].find('月') >= 0):
+                time_month = timearray[0].split('月')[0]
+                time_day = timearray[0].split('月')[1].split('日')[0]
+                time_year = time.strftime('%Y',time.localtime(time.time()))
+                time_weibo = timearray[1]
+                date_weibo = time_year+'-'+time_month+'-'+time_day
+
+            time_sent = date_weibo+' '+time_weibo
+        #eg 1分钟前
         elif(len(timearray)==1):
             minute_ago = int(timearray[0].split('分钟前')[0])
             date_now = datetime.datetime.fromtimestamp(time.time())
             date_time_sent = date_now - datetime.timedelta(minutes=minute_ago)
-            time_sent = datetime.datetime.strftime(date_time_sent,'%m月%d日 %H时%M分')
+            time_sent = datetime.datetime.strftime(date_time_sent,'%Y-%m-%d %H:%M')
         return unicode(time_sent,'utf8')
 
 
