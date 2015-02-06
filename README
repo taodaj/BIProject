@@ -19,8 +19,8 @@ USAGE:
 3. FollowRelationSpider gets its start uids from file(default: ./ids/startpoint)
 4. WeiboSpider gets uids from files whose names start with 'uid' in sourceDir(default: ./ids)
 5. ProfileSpider gets uids from files whose names start with 'uid' in sourceDir(default: ./ids)
-4. CommentSpider gets uids and wids from files whose names start with 'uwid' in sourceDir(default: ./ids)
-5. to refetch all data, MUST clear all sets in redis
+6. CommentSpider gets uids and wids from files whose names start with 'uwid' in sourceDir(default: ./ids)
+7. to refetch all data, MUST clear all sets in redis
 
 
 
