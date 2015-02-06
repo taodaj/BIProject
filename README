@@ -5,15 +5,33 @@ ENV:
     redis 2.8.19
 
 Third Part Package:
-
+    
+    lxml
+    
     pyquery
+    
+    redis
+
+USAGE:
+
+1. uncomment corresponding line in  dispatcher.py to fetch different types of data
+2. dispatcher.py reads accounts from file(default: ./ids/accounts)
+3. FollowRelationSpider gets its start uids from file(default: ./ids/startpoint)
+4. WeiboSpider gets uids from files whose names start with 'uid' in sourceDir(default: ./ids)
+5. ProfileSpider gets uids from files whose names start with 'uid' in sourceDir(default: ./ids)
+4. CommentSpider gets uids and wids from files whose names start with 'uwid' in sourceDir(default: ./ids)
+5. to refetch all data, MUST clear all sets in redis
+
+
+
+FILE INTRO:
 
 dispatcher.py   : manage the work of spiders
 
 storage.py      : deal with things with DB and storing data
 
-spider.py       : super class of more specific spiders
+Spider.py       : super class of more specific spiders
 
-adapter.py      : transform data among many kinds of form
+deduplicator.py : avoid duplicated fetching data
 
 
