@@ -12,18 +12,14 @@ import sys
 import socket
 from Spider import *
 
-logging.basicConfig(level=logging.DEBUG,  
-                    format='%(asctime)s %(filename)s[line:%(lineno)d] %(levelname)s %(message)s',  
-                    datefmt='%a, %d %b %Y %H:%M:%S',  
-                    stream=sys.stdout  
-                    ) 
+
 
 
 
 
 class FollowSpider(Spider):
     def __init__(self,username,password):
-        spider.__init__(self,username,password)        
+        Spider.__init__(self,username,password)        
 
     #get the users he follows
     def getfollow(self,userid):

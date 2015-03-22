@@ -14,14 +14,7 @@ from lxml import etree
 from Spider import *
 import datetime
 
-reload(sys)
-sys.setdefaultencoding('utf-8')
 
-logging.basicConfig(level=logging.DEBUG,
-                    format='%(asctime)s %(filename)s[line:%(lineno)d] %(levelname)s %(message)s',
-                    datefmt='%a, %d %b %Y %H:%M:%S',
-                    stream=sys.stdout
-                    )
 
 class WeiboSpider(Spider):
     def __init__(self,username,password):

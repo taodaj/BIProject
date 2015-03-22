@@ -15,16 +15,6 @@ import re
 from Spider import *
 from lxml import etree
 
-#使用utf-8编码
-reload(sys)
-sys.setdefaultencoding("utf-8")
-
-#配置日志
-logging.basicConfig(level=logging.DEBUG,  
-                    format='%(asctime)s %(filename)s[line:%(lineno)d] %(levelname)s %(message)s',  
-                    datefmt='%a, %d %b %Y %H:%M:%S',  
-                    stream=sys.stdout  
-                    ) 
 
 
 
