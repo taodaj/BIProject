@@ -12,26 +12,11 @@ Third Part Package:
     
     redis
 
-USAGE:
-
-1. uncomment corresponding line in  dispatcher.py to fetch different types of data
-2. dispatcher.py reads accounts from file(default: ./ids/accounts)
-3. FollowRelationSpider gets its start uids from file(default: ./ids/startpoint)
-4. WeiboSpider gets uids from files whose names start with 'uid' in sourceDir(default: ./ids)
-5. ProfileSpider gets uids from files whose names start with 'uid' in sourceDir(default: ./ids)
-6. CommentSpider gets uids and wids from files whose names start with 'uwid' in sourceDir(default: ./ids)
-7. to refetch all data, MUST clear all sets in redis
 
 
 
-FILE INTRO:
 
-dispatcher.py   : manage the work of spiders
 
-storage.py      : deal with things with DB and storing data
 
-Spider.py       : super class of more specific spiders
-
-deduplicator.py : avoid duplicated fetching data
 
 

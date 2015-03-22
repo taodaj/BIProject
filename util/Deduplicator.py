@@ -18,7 +18,6 @@ class Deduplicator:
     
     
     def existInSet(self,setName,item):
-        self.validateSetName(setName)
         if self.redis_db.sismember(setName,item) == 1:
             return True
         else:
@@ -26,19 +25,17 @@ class Deduplicator:
 
 
     def add2Set(self,setName,item):
-        self.validateSetName(setName)
         self.redis_db.sadd(setName,item)
 
     def sortSet(self,setName):
-        self.validateSetName(setName)
         pass
 
-    def validateSetName(self,setName):
-        if self.redis_db.sismember(setName,'none')==0:
-            raise InvalidSetNameException('no "'+setName+'" is kept in db')
 
     def delSet(self,setName):
         self.redis_db.delete(setName)
+
+    def diffSet(self,setNameA,setNamaB):
+        return self.redis_db.sdiff(setNameA,setNamaB)
 
 
 
