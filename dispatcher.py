@@ -81,22 +81,38 @@ class dispatcher:
             if self.spiderType=='FollowRelation':
                 for i in range(self.num_of_threads):
                     ac=self.accounts.get(False)
+<<<<<<< HEAD
                     thread=FollowSpider(ac['username'],ac['password'],self.deduplicator,self.workQueue,self.resultQueue,self.event)
+=======
+                    thread=FollowWorker(ac['username'],ac['password'],self.deduplicator,self.workQueue,self.resultQueue,self.event)
+>>>>>>> origin
                     self.threads.append(thread)
             elif self.spiderType=='Profile':
                 for i in range(self.num_of_threads):
                     ac=self.accounts.get(False)
+<<<<<<< HEAD
                     thread=ProfileSpider(ac['username'],ac['password'],self.deduplicator,self.workQueue,self.resultQueue,self.event)
+=======
+                    thread=ProfileWorker(ac['username'],ac['password'],self.deduplicator,self.workQueue,self.resultQueue,self.event)
+>>>>>>> origin
                     self.threads.append(thread)
             elif self.spiderType=='Weibo':
                 for i in range(self.num_of_threads):
                     ac=self.accounts.get(False)
+<<<<<<< HEAD
                     thread=WeiboSpider(ac['username'],ac['password'],self.deduplicator,self.workQueue,self.resultQueue,self.event)
+=======
+                    thread=WeiboWorker(ac['username'],ac['password'],self.deduplicator,self.workQueue,self.resultQueue,self.event)
+>>>>>>> origin
                     self.threads.append(thread)
             elif self.spiderType=='Comment':
                 for i in range(self.num_of_threads):
                     ac=self.accounts.get(False)
+<<<<<<< HEAD
                     thread=CommentSpider(ac['username'],ac['password'],self.deduplicator,self.workQueue,self.resultQueue,self.event)
+=======
+                    thread=CommentWorker(ac['username'],ac['password'],self.deduplicator,self.workQueue,self.resultQueue,self.event)
+>>>>>>> origin
                     self.threads.append(thread)
 
             
@@ -130,7 +146,11 @@ class dispatcher:
                 except Queue.Empty as e:
                     pass
             # check every 30s
+<<<<<<< HEAD
             time.sleep(30)
+=======
+            time.sleep(5)
+>>>>>>> origin
 
 
 
@@ -151,6 +171,7 @@ class dispatcher:
             ac=self.accounts.get(False)   
             if self.spiderType=='FollowRelation':  
 
+<<<<<<< HEAD
                 thread=FollowSpider(ac['username'],ac['password'],self.deduplicator,self.workQueue,self.resultQueue,self.event)
 
             elif self.spiderType=='Profile':
@@ -164,6 +185,21 @@ class dispatcher:
             elif self.spiderType=='Comment':
 
                 thread=CommentSpider(ac['username'],ac['password'],self.deduplicator,self.workQueue,self.resultQueue,self.event)
+=======
+                thread=FollowWorker(ac['username'],ac['password'],self.deduplicator,self.workQueue,self.resultQueue,self.event)
+
+            elif self.spiderType=='Profile':
+
+                thread=ProfileWorker(ac['username'],ac['password'],self.deduplicator,self.workQueue,self.resultQueue,self.event)
+
+            elif self.spiderType=='Weibo':
+
+                thread=WeiboWorker(ac['username'],ac['password'],self.deduplicator,self.workQueue,self.resultQueue,self.event)
+
+            elif self.spiderType=='Comment':
+
+                thread=CommentWorker(ac['username'],ac['password'],self.deduplicator,self.workQueue,self.resultQueue,self.event)
+>>>>>>> origin
 
             self.threads.append(thread)
             thread.start()
@@ -220,7 +256,11 @@ class dispatcher:
 if __name__ == '__main__':
 
     
+<<<<<<< HEAD
     d=dispatcher('Comment',2)
+=======
+    d=dispatcher('FollowRelation',2)
+>>>>>>> origin
     signal.signal(signal.SIGINT, d.signal_handler)
     d.dispatch()
 
