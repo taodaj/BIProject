@@ -120,8 +120,3 @@ class CommentSpider(Spider):
             time_sent = datetime.datetime.strftime(date_time_sent,'%Y-%m-%d %H:%M')
         return unicode(time_sent,'utf8')
 
-
-if __name__ == '__main__':
-    #!!!!USE YOUR USERNAME AND PASSWORD HERE
-    spider = commentSpider(USERNAME, PASSWORD)
-    print spider.getComment('1644088832','C1JhOhrwM')

@@ -114,19 +114,3 @@ class WeiboSpider(Spider):
                 logging.warning(str(e))
                 continue
         return pageList
-
-if __name__ == '__main__':
-    #!!!!USE YOUR USERNAME AND PASSWORD HERE
-    spider = WeiboSpider("18811442500", "742612")
-    count=1
-    file = open("test-uids")
-    while 1:
-        line = file.readline()
-        if not line:
-            break
-        pass # do something
-        print count
-        uid=line[0:10]
-        print uid
-        count=count+1
-        spider.getWeibo(uid)

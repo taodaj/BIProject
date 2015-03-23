@@ -9,6 +9,7 @@ import pickle
 import os
 import threading
 import time
+import signal
 
 from spider import *
 from entity import *
@@ -123,14 +124,25 @@ class dispatcher:
 
             #check whether the size of resultQueue reaches self.STORESIZE
             if self.resultQueue.qsize()>self.STORESIZE:
-                logging.info('Size of result queue reaches '+self.resultQueue.qsize())
-                storedList=[]
-                for i in range(self.STORESIZE):
-                    storedList.append(self.resultQueue.get())
-                self.storage.store2Object(self.spiderType,storedList)
-
+                logging.info('Size of result queue reaches '+str(self.resultQueue.qsize()))
+                try:
+                    self.storeData()
+                except Queue.Empty as e:
+                    pass
             # check every 30s
-            time.sleep(30)
+            time.sleep(5)
+
+
+
+    def storeData(self):
+        logging.debug('get into storeData()')
+        storedList=[]
+        for i in range(self.STORESIZE):
+            storedList.append(self.resultQueue.get(False))
+
+        self.storage.store2Object(self.spiderType,storedList)        
+
+
 
     def addWorker(self):
         logging.debug('get into addWorker()')
@@ -165,6 +177,7 @@ class dispatcher:
 
     def initAccount(self,source='ids/accounts'):
         logging.debug('get into initAccount()')
+
         f=open(source,'r')
         for line in f:
             line=line[:-1].split(' ')
@@ -174,10 +187,40 @@ class dispatcher:
             self.accounts.put(m)
         f.close()
 
+    #only works when waiting for source
+    def signal_handler(self,signal, frame):
+        #stop thread in threads
+        logging.debug('get into signal_handler()')
+        for thread in self.threads:
+            thread.stop()
+        self.event.set()
+        
+        #wait till all threads terminate
+        singal=False
+        while True:
+            for thread in self.threads:
+                if thread.isAlive():
+                    break
+                singal=True
 
- 
+            if singal:
+                break      
+            time.sleep(1)
+
+        try:
+            while True:
+                self.storeData()
+        except Queue.Empty as e:
+            pass
+
+        logging.info('program exit')
+        sys.exit(0)
+
 
 if __name__ == '__main__':
+
     
-    d=dispatcher('Comment',2)
+    d=dispatcher('FollowRelation',2)
+    signal.signal(signal.SIGINT, d.signal_handler)
     d.dispatch()
+

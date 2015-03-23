@@ -22,6 +22,10 @@ class FollowWorker(threading.Thread):
         self.event=event
         self.spider=FollowSpider(username,password)
         self.status='normal'
+        self.alive=True
+
+    def stop(self):
+        self.alive=False
 
     def run(self):
     #if HTTPError occurs only redo 3 times
@@ -29,7 +33,7 @@ class FollowWorker(threading.Thread):
 
         redoTimes=0
         
-        while redoTimes<3:
+        while redoTimes<3 and self.alive:
             try:
                 #if it's the first time fetch uid from queue    
                 if redoTimes==0:    

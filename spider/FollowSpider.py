@@ -72,8 +72,3 @@ class FollowSpider(Spider):
                 logging.warning(str(e))
                 continue
         return pageList
-
-if __name__ == '__main__':
-    #!!!!USE YOUR USERNAME AND PASSWORD HERE
-    spider = followSpider(USERNAME,PASSWORD)
-    print spider.getfollow('3399558022')

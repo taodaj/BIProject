@@ -186,19 +186,4 @@ class ProfileSpider(Spider):
         
 
     
-if __name__ == '__main__':
-    #!!!!USE YOUR USERNAME AND PASSWORD HERE
-    spider = ProfileSpider('564257051@qq.com', '123123123')
-    count=1     
-    file = open("test-uids")
-    spider.getProfile('1496846867')
-    while 1:
-        line = file.readline()
-        if not line:
-            break
-        pass # do something
-        print count
-        uid=line[0:10]
-        count=count+1
-        spider.getProfile(uid)
 
