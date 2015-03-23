@@ -3,7 +3,6 @@
 
 import cookielib
 import urllib
-import urllib2
 import pyquery
 import logging
 import time
@@ -12,26 +11,83 @@ import sys
 import socket
 import HTMLParser
 import re
-from Spider import *
 from lxml import etree
+import urllib2 
+import threading
+import Queue
 
-#使用utf-8编码
-reload(sys)
-sys.setdefaultencoding("utf-8")
-
-#配置日志
-logging.basicConfig(level=logging.DEBUG,  
-                    format='%(asctime)s %(filename)s[line:%(lineno)d] %(levelname)s %(message)s',  
-                    datefmt='%a, %d %b %Y %H:%M:%S',  
-                    stream=sys.stdout  
-                    ) 
+from Spider import *
+from entity import *
 
 
 
 #微博用户信息爬虫
 class ProfileSpider(Spider):
-    def __init__(self,username,password):
-        Spider.__init__(self,username,password)        
+    def __init__(self,username,password,deduplicator,workQueue,resultQueue,event):      
+        Spider.__init__(self,username,password)     
+        self.deduplicator=deduplicator
+        self.workQueue=workQueue
+        self.resultQueue=resultQueue
+        self.event=event
+
+
+    def run(self):
+    #if HTTPError occurs only redo 3 times
+        logging.debug(self.name + ' gets into run()')
+        redoTimes=0
+        
+        while redoTimes<3 and self.alive:
+            try:
+                #if it's the first time fetch uid from queue    
+                if redoTimes==0:    
+                    uid=self.workQueue.get(False)
+                    self.deduplicator.add2Set('profile_uid_visited',uid)
+                #get profile list
+                profileList=self.getProfile(uid)
+                #put every uid into candidate Queue
+                count=0
+                for ele in profileList:
+                    # get uid 
+                    candidate=ele['uid']
+                    #if uid of follow has not been detected yet
+                    if self.deduplicator.existInSet('profile_uid_visited',candidate)==False:
+                        #added by 1
+                        count+=1
+                        #add it to stored list
+                        obj=Profile()
+                        obj.inflate(ele)
+                        self.resultQueue.put(obj)
+                #when finished, set redoTimes=0
+                redoTimes=0
+                #logging
+                logging.info('spider : '+self.name+' detected '+str(count)+' new user ids')
+            #redo if it's HTTPError
+            except urllib2.HTTPError as e:
+                if redoTimes>3:
+                    redoTimes=0
+                    logging.warning(str(e))
+                    logging.warning('spider '+self.name+' try more than 3 times, now give up collecting user : '+uid)
+                else:
+                    redoTimes+=1
+
+
+            except BlockedException as e:
+                logging.info('spider '+self.name+' is blocked by Sina')
+                self.status='blocked'
+                break
+
+                
+            except urllib2.URLError as e:
+                #network error, no internet available
+                raise e
+            
+            except Queue.Empty as e:
+                self.event.clear()
+                logging.info('spider : '+self.name+' waits for resource')
+                self.event.wait()
+                logging.info('spider : '+self.name+' restarts')
+
+              
 
     def getProfile(self,uid):
         #生成用户信息的url
@@ -196,19 +252,4 @@ class ProfileSpider(Spider):
         
 
     
-if __name__ == '__main__':
-    #!!!!USE YOUR USERNAME AND PASSWORD HERE
-    spider = ProfileSpider('564257051@qq.com', '123123123')
-    count=1     
-    file = open("test-uids")
-    spider.getProfile('1496846867')
-    while 1:
-        line = file.readline()
-        if not line:
-            break
-        pass # do something
-        print count
-        uid=line[0:10]
-        count=count+1
-        spider.getProfile(uid)
 
