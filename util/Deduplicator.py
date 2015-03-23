@@ -37,6 +37,18 @@ class Deduplicator:
     def diffSet(self,setNameA,setNamaB):
         return self.redis_db.sdiff(setNameA,setNamaB)
 
+    #用来记录对应用户(uid)的最新微博(wid),与对应微博(wid)的最新评论(cid)
+    #eg. self.deduplicator.hashSet('latest_weibo',uid,wid)
+    #eg. self.deduplicator.hashSet('latest_comment',wid,cid)
+    def hashSet(self,setName,field,value):
+        self.redis_db.hset(setName,field,value)
+
+    #用来得到对应用户(uid)的最新微博(wid),与对应微博(wid)的最新评论(cid)
+    #eg. self.deduplicator.hashGet('latest_weibo',uid)
+    #eg. self.deduplicator.hashGet('latest_comment',wid)    
+    def hashGet(self,setName,field):
+        return self.redis_db.hget(setName,field)
+
 
 
 
