@@ -137,7 +137,13 @@ class CommentSpider(Spider):
         idList = tree.xpath('//div/@id')
 
         for cid in idList:
+            
+            if(cid == self.deduplicator.hashGet('latest_comment',self.weiboid){
+                return commentList;
+            }
+            
             if(re.match('C_',cid)):
+                self.deduplicator.hashSet('latest_comment',self.weiboid,cid)
                 xpath_comment='//div[@id="'+cid+'"]'+'/span[@class="ctt"]'
                 xpath_comment_text='//div[@id="'+cid+'"]'+'/span[@class="ctt"]/text()'
                 xpath_comment_at = '//div[@id="'+cid+'"]'+'/span[@class="ctt"]/a/text()'
