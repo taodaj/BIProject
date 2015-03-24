@@ -7,6 +7,10 @@ import sys
 import socket
 import urllib2 
 import threading
+#  'ascii' codec can't encode characters
+import sys
+reload(sys)
+sys.setdefaultencoding('utf8')
 import Queue
 
 from lxml import etree
@@ -37,6 +41,7 @@ class CommentSpider(Spider):
         self.workQueue=workQueue
         self.resultQueue=resultQueue
         self.event=event
+        self.incrmt_flag = False
         
 
     def run(self):
@@ -114,6 +119,11 @@ class CommentSpider(Spider):
             content=self.downloadHTML(preURL+postURL,expectedURLSeg)
             #extract data
             tree=etree.HTML(content)
+
+            #increment
+            if self.incrmt_flag == True:
+                break
+
             commentList.extend(self.extractComment(tree))
             #extract next url
             postURL=self.extractFollowUrl(content)
@@ -139,7 +149,8 @@ class CommentSpider(Spider):
         for cid in idList:
             
             if(cid == self.deduplicator.hashGet('latest_comment',self.weiboid)):
-                return commentList;
+                self.incrmt_flag = True
+                return commentList
             
             if(re.match('C_',cid)):
                 self.deduplicator.hashSet('latest_comment',self.weiboid,cid)
@@ -159,6 +170,8 @@ class CommentSpider(Spider):
                 #print type(self.userid),type(self.weiboid),type(comment),type(agree),type(time_sent),type(cid)
                 commentContent = {'uid':self.userid,'wid':self.weiboid,'comment':comment,'agree':agree,'time':time_sent,'cid':str(cid)}
                 commentList.append(commentContent)
+                print commentContent
+                logging.debug(commentContent)
 
         return commentList
 
