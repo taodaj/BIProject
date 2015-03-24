@@ -28,6 +28,7 @@ class WeiboSpider(Spider):
         self.workQueue=workQueue
         self.resultQueue=resultQueue
         self.event=event
+        self.checkFirstWeibo = False
 
 
     def run(self):
@@ -105,6 +106,8 @@ class WeiboSpider(Spider):
            if postURL == None:
               #print 'Cant get postURL'
               break
+           if self.checkFirstWeibo:
+               break;
         return weiboList
 
     def extractFollowingUrl(self,content):
@@ -123,6 +126,9 @@ class WeiboSpider(Spider):
             try:
                 obj={}
                 weiboid=ele.get("id").split('_')[1]
+                if(weiboid==self.deduplicator.hashGet('latest_weibo',userid,weiboid)):
+                    self.checkFirstWeibo = True;
+                    return pageList
                 #print weiboid
                 hrefs = ele.xpath(u"div/span[@class='cmt']/a")
                 fowardingWeiboId=""

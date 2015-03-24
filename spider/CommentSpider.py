@@ -138,9 +138,8 @@ class CommentSpider(Spider):
 
         for cid in idList:
             
-            if(cid == self.deduplicator.hashGet('latest_comment',self.weiboid){
+            if(cid == self.deduplicator.hashGet('latest_comment',self.weiboid)):
                 return commentList;
-            }
             
             if(re.match('C_',cid)):
                 self.deduplicator.hashSet('latest_comment',self.weiboid,cid)
@@ -194,4 +193,3 @@ class CommentSpider(Spider):
             date_time_sent = date_now - datetime.timedelta(minutes=minute_ago)
             time_sent = datetime.datetime.strftime(date_time_sent,'%Y-%m-%d %H:%M')
         return unicode(time_sent,'utf8')
-
