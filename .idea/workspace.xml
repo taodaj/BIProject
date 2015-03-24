@@ -2,9 +2,7 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="039858b5-c85c-4b8c-803b-5e5148eabac4" name="Default" comment="">
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/spider/CommentSpider.py" afterPath="$PROJECT_DIR$/spider/CommentSpider.py" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/spider/WeiboSpider.py" afterPath="$PROJECT_DIR$/spider/WeiboSpider.py" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
     </list>
     <ignored path="BIProject.iws" />
     <ignored path=".idea/workspace.xml" />
@@ -43,8 +41,8 @@
       <file leaf-file-name="WeiboSpider.py" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/spider/WeiboSpider.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.4684466" vertical-offset="1593" max-vertical-offset="2375">
-              <caret line="164" column="44" selection-start-line="164" selection-start-column="44" selection-end-line="164" selection-end-column="44" />
+            <state vertical-scroll-proportion="0.5145631" vertical-offset="909" max-vertical-offset="2375">
+              <caret line="129" column="47" selection-start-line="129" selection-start-column="47" selection-end-line="129" selection-end-column="47" />
               <folding>
                 <element signature="e#650#2858#0" expanded="false" />
               </folding>
@@ -74,8 +72,8 @@
         <option value="$PROJECT_DIR$/spider/commentSpider.py" />
         <option value="$PROJECT_DIR$/Entity/Weibo.py" />
         <option value="$PROJECT_DIR$/spider/weiboSpider.py" />
-        <option value="$PROJECT_DIR$/spider/WeiboSpider.py" />
         <option value="$PROJECT_DIR$/spider/CommentSpider.py" />
+        <option value="$PROJECT_DIR$/spider/WeiboSpider.py" />
       </list>
     </option>
   </component>
@@ -424,7 +422,7 @@
       <window_info id="Application Servers" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Python Console" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
-      <window_info id="Run" active="true" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.32840237" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
+      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.32840237" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="2" side_tool="true" content_ui="tabs" />
@@ -562,8 +560,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/spider/WeiboSpider.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.4684466" vertical-offset="1593" max-vertical-offset="2375">
-          <caret line="164" column="44" selection-start-line="164" selection-start-column="44" selection-end-line="164" selection-end-column="44" />
+        <state vertical-scroll-proportion="0.5145631" vertical-offset="909" max-vertical-offset="2375">
+          <caret line="129" column="47" selection-start-line="129" selection-start-column="47" selection-end-line="129" selection-end-column="47" />
           <folding>
             <element signature="e#650#2858#0" expanded="false" />
           </folding>

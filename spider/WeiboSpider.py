@@ -127,7 +127,7 @@ class WeiboSpider(Spider):
                 obj={}
                 weiboid=ele.get("id").split('_')[1]
                 if(weiboid==self.deduplicator.hashGet('latest_weibo',userid,weiboid)):
-                    self.checkFirstWeibo = True;
+                    self.checkFirstWeibo = True
                     return pageList
                 #print weiboid
                 hrefs = ele.xpath(u"div/span[@class='cmt']/a")
