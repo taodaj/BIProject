@@ -110,8 +110,8 @@ class CommentSpider(Spider):
         self.weiboid=weiboid
         commentList = []
 
-        preURL = 'http://weibo.cn/'
-        postURL = 'comment/'+weiboid + '?uid=' + userid + '&rl=2&page=1'
+        preURL = 'http://weibo.cn'
+        postURL = '/comment/'+weiboid + '?uid=' + userid + '&rl=2&page=1'
         expectedURLSeg='comment/'+weiboid + '?uid=' + userid
 
         while True:
