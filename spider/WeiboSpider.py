@@ -29,6 +29,7 @@ class WeiboSpider(Spider):
         self.resultQueue=resultQueue
         self.event=event
         self.checkFirstWeibo = False
+        self.checkSaveWeibo = False
 
 
     def run(self):
@@ -93,6 +94,8 @@ class WeiboSpider(Spider):
         #weibo list
         weiboList=[]
         content=''
+        self.checkFirstWeibo=False
+        self.checkSaveWeibo = False
         preURL='http://weibo.cn'
         postURL='/u/'+userid
         expectedURLSeg='weibo.cn/u/'+userid
@@ -111,6 +114,7 @@ class WeiboSpider(Spider):
         return weiboList
 
     def extractFollowingUrl(self,content):
+        self.checkSaveWeibo=True
         tree=etree.HTML(content)
         for ele in tree.xpath(u"//div[@class='pa' and @id='pagelist']"):
             if ele.xpath(u"form/div/a")[0].text==u'下页':
@@ -126,7 +130,9 @@ class WeiboSpider(Spider):
             try:
                 obj={}
                 weiboid=ele.get("id").split('_')[1]
-                if(weiboid==self.deduplicator.hashGet('latest_weibo',userid,weiboid)):
+                if(self.checkSaveWeibo==False):
+                    self.deduplicator.hashSet('latest_weibo',userid,weiboid)
+                if(weiboid==self.deduplicator.hashGet('latest_weibo',userid)):
                     self.checkFirstWeibo = True
                     return pageList
                 #print weiboid
@@ -207,4 +213,4 @@ class WeiboSpider(Spider):
             date_now = datetime.datetime.fromtimestamp(time.time())
             date_time_sent = date_now - datetime.timedelta(minutes=minute_ago)
             time_sent = datetime.datetime.strftime(date_time_sent,'%Y-%m-%d %H:%M')
-        return unicode(time_sent,'utf8')
+        return time_sent
