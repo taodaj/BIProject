@@ -117,6 +117,7 @@ class CommentSpider(Spider):
         while True:
             #HTTPError AND TIMEOUT , BlockedException may arise
             content=self.downloadHTML(preURL+postURL,expectedURLSeg)
+            print postURL
             #extract data
             tree=etree.HTML(content)
 
@@ -129,7 +130,9 @@ class CommentSpider(Spider):
             postURL=self.extractFollowUrl(content)
             if postURL == None:
                 break
-
+        wid_lastcomment = commentList[-1].get('wid')
+        cid_lastcomment = commentList[-1].get('cid')
+        self.deduplicator.hashSet('latest_comment', wid_lastcomment, cid_lastcomment)
         return commentList
 
 
@@ -170,7 +173,6 @@ class CommentSpider(Spider):
                 #print type(self.userid),type(self.weiboid),type(comment),type(agree),type(time_sent),type(cid)
                 commentContent = {'uid':self.userid,'wid':self.weiboid,'comment':comment,'agree':agree,'time':time_sent,'cid':str(cid)}
                 commentList.append(commentContent)
-                print commentContent
                 logging.debug(commentContent)
 
         return commentList
@@ -206,3 +208,6 @@ class CommentSpider(Spider):
             date_time_sent = date_now - datetime.timedelta(minutes=minute_ago)
             time_sent = datetime.datetime.strftime(date_time_sent,'%Y-%m-%d %H:%M')
         return unicode(time_sent,'utf8')
+
+
+
