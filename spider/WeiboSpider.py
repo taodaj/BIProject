@@ -178,7 +178,7 @@ class WeiboSpider(Spider):
                 obj['fowardingWeiboId']=fowardingWeiboId
                 obj['atsList']=atsList
                 pageList.append(obj)
-                #pageList.append(weiboid+','+userid+','+content+','+time_sent+','+fowardingNum+','+commentNum +','+likeNum+','+plantform+','+fowardingWeiboId+','+atsList)
+                logging.debug(weiboid+','+userid+','+content+','+time_sent+','+fowardingNum+','+commentNum +','+likeNum+','+plantform+','+fowardingWeiboId+','+atsList)
             except AttributeError as e:
                 logging.warning(str(e))
                 continue
