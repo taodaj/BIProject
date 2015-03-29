@@ -130,8 +130,10 @@ class CommentSpider(Spider):
             postURL=self.extractFollowUrl(content)
             if postURL == None:
                 break
-        wid_lastcomment = commentList[-1].get('wid')
-        cid_lastcomment = commentList[-1].get('cid')
+        #更新 wid cid
+        if len(commentList > 0):
+            wid_lastcomment = commentList[-1].get('wid')
+            cid_lastcomment = commentList[-1].get('cid')
         self.deduplicator.hashSet('latest_comment', wid_lastcomment, cid_lastcomment)
         return commentList
 
